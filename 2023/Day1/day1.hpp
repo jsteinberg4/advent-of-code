@@ -12,4 +12,4 @@
  * @return sum of all calibration values in PUZZLE1_INPUT
  */
 int puzzle1(void);
-/* int puzzle2(void); */
+int puzzle2(void);
