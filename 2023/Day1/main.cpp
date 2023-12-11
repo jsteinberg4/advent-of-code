@@ -7,6 +7,7 @@
  */
 
 #include "day1.hpp"
+#include <algorithm>
 #include <cctype>
 #include <cstdlib>
 #include <fstream>
@@ -24,10 +25,10 @@ int main(int argc, char *argv[]) {
   int puzzle = std::stoi(argv[1]);
   switch (puzzle) {
   case 1:
-    puzzle1();
+    std::cout << "Puzzle 1: " << puzzle1() << "\n";
     break;
   case 2:
-    puzzle2();
+    std::cout << "Puzzle 2: " << puzzle2() << "\n";
     break;
   default:
     std::cerr << "Puzzle must be either 1 or 2, received=" << puzzle << "\n";
@@ -51,6 +52,7 @@ int puzzle1() {
   /* Sum the calibration value for each line */
   while (std::getline(input, line)) {
     sum += puzzle1_line_sum(line);
+    /* std::cout << "Sum = " << sum << "\n"; */
   }
 
   input.close();
@@ -58,47 +60,23 @@ int puzzle1() {
 }
 
 static int puzzle1_line_sum(const std::string &line) {
-  std::vector<std::string> nums;
+  int first = -1;
+  int last = -1;
 
-  /* Learner note: auto will become std::string::iterator at *compile* time */
-  for (auto iter = line.begin(); iter != line.end(); iter++) {
-    if (std::isdigit(*iter))
-      nums.push_back(std::string(*iter));
+  for (int x = 0; x < line.size(); x++) {
+    if (std::isdigit(line[x])) {
+      int c_value = line[x] - '0';
+      if (first == -1)
+        first = c_value * 10;
+      else
+        last = c_value;
+    }
   }
-  std::cout << "Numbers: \n";
-  for (auto iter = nums.begin(); iter != nums.end(); iter++)
-    std::cout << *iter << "\n";
-  exit(2);
-  //  uint32_t left = 0;
-  //  uint32_t right = line.length() - 1;
 
-  //  while (left < line.length()) {
-  //    if (std::isdigit(line[left]))
-  //      break;
-  //    else
-  //      left++;
-  //  }
-  //  while (right > 0) {
-  //    if (std::isdigit(line[right]))
-  //      break;
-  //    else
-  //      right++;
-  //  }
+  first = std::max(first, 0);
+  last = std::max(last, 0);
 
-  //  if (left < right) {
-  //    int local_sum = atoi(&line[left]) * 10 + atoi(&line[right]);
-  //    /* std::cout << "Line sum=" << local_sum << "\n"; */
-  //    if (local_sum > 99) {
-  //      std::cout << "Line value adds to > 100"
-  //                << "\n";
-  //      std::cout << "\tLine: " << line << "\n";
-  //      std::cout << "\tleft=" << line[left] << ", right=" << line[right]
-  //                << "\n";
-  //    }
-  //    sum += local_sum;
-  //  } else if (left == right)
-  //    sum += atoi(&line[left]);
-  return 0;
+  return first + last;
 }
 
 int puzzle2() { return -1; }
