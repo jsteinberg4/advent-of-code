@@ -17,7 +17,7 @@
 
 int main(int argc, char *argv[]) {
   if (argc != 2) {
-    std::cerr << "Usage: ./day1 [puzzle1, puzzle2]"
+    std::cerr << "Usage: ./day1 [1, 2]"
               << "\n";
     std::exit(1);
   }
@@ -52,7 +52,6 @@ int puzzle1() {
   /* Sum the calibration value for each line */
   while (std::getline(input, line)) {
     sum += puzzle1_line_sum(line);
-    /* std::cout << "Sum = " << sum << "\n"; */
   }
 
   input.close();
